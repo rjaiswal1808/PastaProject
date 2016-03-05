@@ -5,6 +5,7 @@ android/support/v7/widget/RecyclerView$6.class
 android/support/annotation/VisibleForTesting.class
 android/support/design/widget/MathUtils.class
 android/support/design/widget/CoordinatorLayout$ApplyInsetsListener.class
+com/helpiez/app/ui/activity/EventCreationActivity$4.class
 com/mobsandgeeks/saripaar/rule/AssertTrueRule.class
 android/support/design/R$layout.class
 com/parse/ParsePlugins.class
@@ -12,7 +13,6 @@ android/support/v4/view/NestedScrollingParent.class
 android/support/v4/view/MenuCompat.class
 android/support/v4/media/session/MediaControllerCompat.class
 android/support/v4/app/FragmentStatePagerAdapter.class
-com/helpiez/app/CreateEvent.class
 android/support/v4/app/Fragment$SavedState.class
 android/support/annotation/IdRes.class
 android/support/v4/util/DebugUtils.class
@@ -39,6 +39,7 @@ android/support/v7/widget/RecyclerView$ItemAnimator.class
 android/support/design/widget/TabLayout$OnTabSelectedListener.class
 com/mobsandgeeks/saripaar/annotation/Url.class
 android/support/v4/widget/MaterialProgressDrawable.class
+com/parse/SaveCallback.class
 android/support/v4/app/ActionBarDrawerToggle.class
 android/support/v4/media/MediaBrowserCompat$ConnectionCallback.class
 com/mobsandgeeks/saripaar/annotation/IpAddress.class
@@ -51,6 +52,7 @@ com/mobsandgeeks/saripaar/rule/ConfirmEmailRule.class
 android/support/v7/widget/RecyclerView$LayoutParams.class
 android/support/v4/app/FragmentActivity.class
 android/support/v4/media/session/MediaSessionCompat$1.class
+com/helpiez/app/ui/activity/EventDetailActivity$1.class
 android/support/v4/app/FragmentTabHost.class
 android/support/v4/app/DialogFragment.class
 android/support/v4/util/ArrayMap.class
@@ -312,7 +314,6 @@ android/support/v7/widget/RecyclerView$State.class
 android/support/v4/app/FragmentManagerState.class
 android/support/design/widget/CoordinatorLayout$DefaultBehavior.class
 android/support/v4/view/ViewPropertyAnimatorCompat.class
--keep class com.helpiez.app.CreateEvent { <init>(); }
 com/parse/ProxyService.class
 android/support/v7/widget/RecyclerView$SmoothScroller.class
 com/mobsandgeeks/saripaar/rule/ConfirmPasswordRule.class
@@ -374,6 +375,7 @@ android/support/design/R.class
 com/helpiez/app/ui/activity/LoginActivity$2.class
 android/support/design/widget/Snackbar$6.class
 butterknife/internal/ListenerMethod.class
+com/helpiez/app/ui/activity/EventDetailActivity.class
 android/support/v4/media/session/PlaybackStateCompat$Actions.class
 android/support/v4/view/ViewCompat.class
 android/support/design/widget/TabLayout$TabGravity.class
@@ -423,6 +425,7 @@ android/support/v4/widget/MaterialProgressDrawable$Ring.class
 com/helpiez/app/adapters/PageAdapter.class
 android/support/v4/app/SuperNotCalledException.class
 android/support/v4/media/MediaBrowserCompat$1.class
+com/helpiez/app/ui/activity/LandingActivity$3.class
 android/support/design/widget/TabLayout.class
 com/mobsandgeeks/saripaar/annotation/Password.class
 android/support/v7/widget/RecyclerView$OnItemTouchListener.class
@@ -433,6 +436,7 @@ android/support/v7/app/AppCompatActivity.class
 android/support/annotation/IntDef.class
 android/support/design/widget/TabLayout$TabView.class
 com/parse/ParseAnalytics.class
+com/helpiez/app/ui/activity/EventCreationActivity$1.class
 com/mobsandgeeks/saripaar/annotation/NotEmpty.class
 com/parse/ParseObject.class
 butterknife/BindDimen.class
@@ -447,7 +451,6 @@ android/support/v4/view/ViewCompatHC.class
 com/parse/EventuallyPin.class
 android/support/annotation/LayoutRes.class
 android/support/design/widget/AppBarLayout$LayoutParams.class
-com/helpiez/app/CreateEvent$1.class
 com/parse/ManifestInfo.class
 android/support/annotation/StyleRes.class
 android/support/v4/app/BackStackRecord.class
@@ -465,6 +468,7 @@ com/helpiez/app/ui/activity/LandingActivity$2.class
 android/support/v4/app/BaseFragmentActivityDonut.class
 android/support/v7/appcompat/R$style.class
 com/parse/ParseQuery.class
+-keep class com.helpiez.app.ui.activity.EventDetailActivity { <init>(); }
 com/mobsandgeeks/saripaar/annotation/Max.class
 android/support/v4/view/ViewConfigurationCompat.class
 -keep class com.helpiez.app.ui.activity.LandingActivity { <init>(); }
@@ -530,6 +534,7 @@ butterknife/OnEditorAction.class
 android/support/annotation/UiThread.class
 com/facebook/login/widget/LoginButton.class
 android/support/v7/widget/RecyclerView$SavedState.class
+com/helpiez/app/ui/activity/EventCreationActivity$2.class
 android/support/v7/widget/ViewInfoStore$ProcessCallback.class
 com/mobsandgeeks/saripaar/rule/LengthRule.class
 android/support/v4/app/FragmentManagerImpl$FragmentTag.class
@@ -547,6 +552,7 @@ android/support/design/widget/SnackbarManager$Callback.class
 android/support/v4/view/GravityCompat.class
 android/support/v7/widget/RecyclerView$ItemAnimator$ItemAnimatorFinishedListener.class
 android/support/v4/view/ViewCompat$KitKatViewCompatImpl.class
+com/helpiez/app/ui/activity/EventCreationActivity$3.class
 android/support/v4/media/session/MediaSessionCompat$OnActiveChangeListener.class
 commons/validator/routines/InetAddressValidator.class
 android/support/design/widget/ViewGroupUtils.class

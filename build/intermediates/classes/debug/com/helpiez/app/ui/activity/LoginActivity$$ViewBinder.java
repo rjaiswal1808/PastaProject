@@ -12,7 +12,7 @@ public class LoginActivity$$ViewBinder<T extends com.helpiez.app.ui.activity.Log
     target.mEmailView = finder.castView(view, 2131492990, "field 'mEmailView'");
     view = finder.findRequiredView(source, 2131492991, "field 'mPasswordView'");
     target.mPasswordView = finder.castView(view, 2131492991, "field 'mPasswordView'");
-    view = finder.findRequiredView(source, 2131492987, "field 'mProgressView'");
+    view = finder.findRequiredView(source, 2131492984, "field 'mProgressView'");
     target.mProgressView = view;
     view = finder.findRequiredView(source, 2131492988, "field 'mLoginFormView'");
     target.mLoginFormView = view;

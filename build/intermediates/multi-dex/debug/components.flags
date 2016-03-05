@@ -48,11 +48,11 @@
     <init>();
 }
 
--keep class com.helpiez.app.CreateEvent {
+-keep class com.helpiez.app.ui.activity.EventCreationActivity {
     <init>();
 }
 
--keep class com.helpiez.app.ui.activity.EventCreationActivity {
+-keep class com.helpiez.app.ui.activity.EventDetailActivity {
     <init>();
 }
 

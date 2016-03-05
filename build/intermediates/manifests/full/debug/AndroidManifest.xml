@@ -96,9 +96,6 @@
             android:name="com.helpiez.app.EventDetails"
             android:label="@string/title_activity_event_details"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name="com.helpiez.app.CreateEvent"
-            android:label="@string/title_activity_create_event" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -107,6 +104,10 @@
         <activity
             android:name="com.helpiez.app.ui.activity.EventCreationActivity"
             android:label="@string/title_activity_event_creation"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.helpiez.app.ui.activity.EventDetailActivity"
+            android:label="@string/title_activity_event_detail_sctivity"
             android:theme="@style/AppTheme" />
     </application>
 

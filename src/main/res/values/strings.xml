@@ -41,6 +41,13 @@
     <string name="error_invalid_phonenumber">Invalid Phone Number</string>
     <string name="title_activity_event_details">Event Details</string>
     <string name="title_activity_create_event">Create Event</string>
+    <string name="error_invalid_event_name">Invalid Event Name</string>
+    <string name="error_invalid_event_start">Invalid Date</string>
+    <string name="error_invalid_event_end">Invalid Date</string>
+    <string name="error_invalid_event_desc">Invalid Description</string>
+    <string name="error_invalid_event_cause">Invalid Cause</string>
+    <string name="error_invalid_event_loc">Invalid Location</string>
+
 
     <!-- Event Associated text-->
     <string name="prompt_event_name">Event Name</string>
@@ -56,5 +63,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_event_creation">EventCreationActivity</string>
+    <string name="title_activity_event_detail_sctivity">EventDetailSctivity</string>
 
 </resources>

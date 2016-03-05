@@ -10,10 +10,12 @@ package com.helpiez.app;
 
 import android.app.Application;
 
+import com.helpiez.app.model.NGOEvent;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseInstallation;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 
@@ -24,7 +26,7 @@ public class StarterApplication extends Application {
         super.onCreate();
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
-
+        ParseObject.registerSubclass(NGOEvent.class);
         // Add your initialization code here
         Parse.initialize(this, "tdhqaVeU5AsjnMoO22eqjfm4frM3uzwAScBAKM0U", "Kz4w6jOYBISGehF0gM25uNupRo2ah7PD8KL3Zyhk");
         ParseInstallation.getCurrentInstallation().saveInBackground();

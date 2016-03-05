@@ -1,12 +1,21 @@
 package com.helpiez.app.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 @ParseClassName("opportunity")
-public class NGOEvent extends ParseObject {
+public class NGOEvent extends ParseObject implements Serializable {
 
     final static String EVENT_NAME = "name";
     final static String EVENT_TIME = "when";
@@ -39,8 +48,16 @@ public class NGOEvent extends ParseObject {
         return getString(EVENT_TIME);
     }
 
-    public void setEventTime(long timeInMillis) {
-        put(EVENT_TIME, timeInMillis);
+    public void setEventTime(String timeString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+        Date convertedCurrentDate = null;
+        try {
+            convertedCurrentDate = sdf.parse(timeString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(convertedCurrentDate != null)
+            put(EVENT_TIME, convertedCurrentDate);
     }
 
     public String getEventLocationAddress() {
@@ -100,5 +117,21 @@ public class NGOEvent extends ParseObject {
 
     public void setImage(ParseFile parseFile) {
         put(EVENT_IMAGE, parseFile);
+    }
+
+    public String getEventDeadline() {
+        return getString(EVENT_DEADLINE);
+    }
+
+    public void setEventDeadline( String timeString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+        Date convertedCurrentDate = null;
+        try {
+            convertedCurrentDate = sdf.parse(timeString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(convertedCurrentDate != null)
+            put(EVENT_DEADLINE, convertedCurrentDate);
     }
 }

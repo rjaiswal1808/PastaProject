@@ -97,6 +97,10 @@
         <activity
             android:name=".ui.activity.EventCreationActivity"
             android:label="@string/title_activity_event_creation"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.activity.EventDetailActivity"
+            android:label="@string/title_activity_event_detail_sctivity"
             android:theme="@style/AppTheme"></activity>
     </application>
 

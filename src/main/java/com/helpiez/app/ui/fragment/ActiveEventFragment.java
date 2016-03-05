@@ -1,16 +1,26 @@
 package com.helpiez.app.ui.fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.helpiez.app.R;
+import com.helpiez.app.adapters.EventAdapter;
+import com.helpiez.app.model.NGOEvent;
 import com.helpiez.app.ui.activity.LandingActivity;
+import com.helpiez.app.ui.util.ParseServer;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,10 +36,8 @@ public class ActiveEventFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    EventAdapter mAdapter;
+    RecyclerView recyclerView;
     private LandingActivity mActivity;
     public ActiveEventFragment() {
         // Required empty public constructor
@@ -47,8 +55,6 @@ public class ActiveEventFragment extends Fragment {
     public static ActiveEventFragment newInstance(String param1, String param2) {
         ActiveEventFragment fragment = new ActiveEventFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,17 +62,25 @@ public class ActiveEventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mAdapter = new EventAdapter(mActivity);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_active_event, container, false);
+        View view = inflater.inflate(R.layout.fragment_active_event, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        // use a  layout manager
+        RecyclerView.LayoutManager lm = new LinearLayoutManager(mActivity);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.setAdapter(mAdapter);
+        refreshProjectList();
+        return view;
+    }
+
+    private void refreshProjectList() {
+        ParseServer.getProjects(mActivity, mHandler.obtainMessage());
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -83,6 +97,16 @@ public class ActiveEventFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+    public Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            ArrayList<NGOEvent> posts = (ArrayList<NGOEvent>)msg.obj;
+            mAdapter.set(posts, 2);
+            Toast.makeText(mActivity, "Done", Toast.LENGTH_LONG).show();
+        }
+    };
 
     @Override
     public void onDetach() {
