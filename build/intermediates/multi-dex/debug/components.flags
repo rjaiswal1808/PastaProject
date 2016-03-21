@@ -32,18 +32,6 @@
     <init>();
 }
 
--keep class com.parse.PushService {
-    <init>();
-}
-
--keep class com.parse.ParsePushBroadcastReceiver {
-    <init>();
-}
-
--keep class com.parse.GcmBroadcastReceiver {
-    <init>();
-}
-
 -keep class com.helpiez.app.EventDetails {
     <init>();
 }

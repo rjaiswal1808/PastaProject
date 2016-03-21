@@ -720,7 +720,7 @@ int id drawer_layout 0x7f0c007a
 int id edit_query 0x7f0c0068
 int id email 0x7f0c007e
 int id email_login_form 0x7f0c007d
-int id email_sign_in_button 0x7f0c0081
+int id email_sign_in_button 0x7f0c0082
 int id end 0x7f0c0020
 int id end_padder 0x7f0c00b1
 int id enterAlways 0x7f0c0015
@@ -757,7 +757,6 @@ int id line3 0x7f0c00ae
 int id listMode 0x7f0c000b
 int id list_item 0x7f0c004d
 int id login 0x7f0c0080
-int id login_button 0x7f0c0082
 int id login_form 0x7f0c007c
 int id login_progress 0x7f0c0078
 int id main_layout 0x7f0c0095
@@ -818,6 +817,7 @@ int id snackbar_action 0x7f0c0099
 int id snackbar_text 0x7f0c0098
 int id snap 0x7f0c0019
 int id spacer 0x7f0c0051
+int id spinner 0x7f0c0081
 int id split_action_bar 0x7f0c0008
 int id src_atop 0x7f0c0028
 int id src_in 0x7f0c0029
@@ -1007,14 +1007,15 @@ int string prompt_event_start_date_time 0x7f060047
 int string prompt_ngo_name 0x7f060048
 int string prompt_password 0x7f060049
 int string prompt_phonenumber 0x7f06004a
+int string spinner_title 0x7f06004b
 int string status_bar_notification_info_overflow 0x7f060024
-int string title_activity_create_event 0x7f06004b
-int string title_activity_event_creation 0x7f06004c
-int string title_activity_event_detail_sctivity 0x7f06004d
-int string title_activity_event_details 0x7f06004e
-int string title_activity_landing 0x7f06004f
-int string title_activity_login 0x7f060050
-int string title_activity_register 0x7f060051
+int string title_activity_create_event 0x7f06004c
+int string title_activity_event_creation 0x7f06004d
+int string title_activity_event_detail_sctivity 0x7f06004e
+int string title_activity_event_details 0x7f06004f
+int string title_activity_landing 0x7f060050
+int string title_activity_login 0x7f060051
+int string title_activity_register 0x7f060052
 int style AlertDialog_AppCompat 0x7f09007f
 int style AlertDialog_AppCompat_Light 0x7f090080
 int style Animation_AppCompat_Dialog 0x7f090081

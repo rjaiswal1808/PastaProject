@@ -21,9 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.helpiez.app.R;
+import com.helpiez.app.SessionManager;
 import com.helpiez.app.adapters.PageAdapter;
-import com.parse.ParseAnonymousUtils;
-import com.parse.ParseUser;
+import com.helpiez.app.volley.Volleyton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,6 +46,13 @@ public class LandingActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(SessionManager.getSessionId(this).equalsIgnoreCase("NA")) {
+            LoginActivity.start(this);
+            return;
+        }
+
+        Volleyton.createInstance(this.getApplicationContext());
+
         setContentView(R.layout.activity_landing);
         ButterKnife.bind(LandingActivity.this);
 
@@ -79,20 +86,21 @@ public class LandingActivity extends AppCompatActivity
 
             }
         });
-        //Check user exist or not
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser == null || ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
-            // do stuff with the user
-            LoginActivity.start(LandingActivity.this);
-            return;
+
+        if(SessionManager.getUserType(this).equalsIgnoreCase("NSS")) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LandingActivity.this.startActivity(new Intent(LandingActivity.this, EventCreationActivity.class));
+                }
+            });
+        }
+        else {
+            fab.setVisibility(View.GONE);
+            fab.setOnClickListener(null);
         }
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LandingActivity.this.startActivity(new Intent(LandingActivity.this, EventCreationActivity.class));
-            }
-        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -106,9 +114,9 @@ public class LandingActivity extends AppCompatActivity
             }
         });
         TextView userName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_name);
-        userName.setText(ParseUser.getCurrentUser().getUsername());
+//        userName.setText(ParseUser.getCurrentUser().getUsername());
         TextView userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_email);
-        userEmail.setText(ParseUser.getCurrentUser().getEmail());
+//        userEmail.setText(ParseUser.getCurrentUser().getEmail());
     }
 
     @Override
@@ -142,7 +150,7 @@ public class LandingActivity extends AppCompatActivity
     }
 
     private void logout() {
-        ParseUser.logOut();
+//        ParseUser.logOut();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         this.finish();

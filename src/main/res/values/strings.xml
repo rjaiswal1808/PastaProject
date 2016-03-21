@@ -64,5 +64,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_event_creation">EventCreationActivity</string>
     <string name="title_activity_event_detail_sctivity">EventDetailSctivity</string>
+    <string name="spinner_title">I am :</string>
 
 </resources>

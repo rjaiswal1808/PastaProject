@@ -10,23 +10,30 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.facebook.login.widget.LoginButton;
+import com.android.volley.Request;
 import com.helpiez.app.R;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
+import com.helpiez.app.SessionManager;
+import com.helpiez.app.model.BusinessObject;
+import com.helpiez.app.model.User;
+import com.helpiez.app.volley.FeedManager;
+import com.helpiez.app.volley.FeedParams;
+import com.helpiez.app.volley.Interfaces;
+import com.helpiez.app.volley.Volleyton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +42,7 @@ import butterknife.OnClick;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // UI references.
     @Bind(R.id.email)
@@ -53,9 +60,10 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolBar;
 
-    @Bind(R.id.login_button)
-    LoginButton facebookLoginButton;
+    @Bind(R.id.spinner)
+    Spinner spinner;
 
+    String loginAs;
 
     public static void start(Activity activity) {
         Intent starter = new Intent(activity, LoginActivity.class);
@@ -70,8 +78,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Volleyton.createInstance(this.getApplicationContext());
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+        ButterKnife.bind(LoginActivity.this);
         setSupportActionBar(toolBar);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -83,26 +92,24 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-        final ArrayList<String> permissions = new ArrayList();
-        permissions.add("user_friends");
 
-        facebookLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseFacebookUtils.logInWithReadPermissionsInBackground(LoginActivity.this, permissions, new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException err) {
-                        if (user == null) {
-                            Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
-                        } else if (user.isNew()) {
-                            Log.d("MyApp", "User signed up and logged in through Facebook!");
-                        } else {
-                            Log.d("MyApp", "User logged in through Facebook!");
-                        }
-                    }
-                });
-            }
-        });
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("NSS");
+        categories.add("Volunteer");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+
     }
 
     @OnClick(R.id.email_sign_in_button)
@@ -123,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -156,22 +163,60 @@ public class LoginActivity extends AppCompatActivity {
             // perform the user login attempt.
             showProgress(true);
 
-            ParseUser.logInInBackground(email, password, new LogInCallback() {
-                public void done(ParseUser user, ParseException e) {
+            HashMap<String, String> hmpRegType = new HashMap<>();
+            hmpRegType.put("email", email);
+            hmpRegType.put("password", password);
 
-                    if (user != null) {
-                        // Hooray! The user is logged in
-                        LandingActivity.start(LoginActivity.this);
-                        finish();
-                    } else {
-                        // Login failed. Look at the ParseException to see what happened.
-                        mPasswordView.setError("User name or password is invalid");
-                        mPasswordView.requestFocus();
+            String url = "";
+            if(loginAs.equalsIgnoreCase("NSS"))
+                url = "http://rahuljaiswal.me/api/ngologin.php";
+            else
+                url = "http://rahuljaiswal.me/api/userlogin.php";
+
+            FeedParams feedParams = new FeedParams(url, User.class, new Interfaces.IDataRetrievalListener() {
+                @Override
+                public void onDataRetrieved(BusinessObject businessObject) {
+                    if(businessObject != null && businessObject instanceof User){
+                        User user = (User) businessObject;
+                        if(user.getStatus() == 1){
+                            //do your work here
+                            SessionManager.setSessionId(LoginActivity.this, user.getSessionId());
+                            SessionManager.setUserType(LoginActivity.this, loginAs);
+                            SessionManager.setUserId(LoginActivity.this, email);
+                            LandingActivity.start(LoginActivity.this);
+                            finish();
+                        }
+                        else {
+//                        // Login failed. Look at the ParseException to see what happened.
+                            mPasswordView.setError("User name or password is invalid");
+                            mPasswordView.requestFocus();
+                        }
+                        showProgress(false);
                     }
-                    showProgress(false);
                 }
-
             });
+            feedParams.setShouldCache(true);
+            feedParams.setMethod(Request.Method.POST);
+            feedParams.setPostParams(hmpRegType);
+            FeedManager feedManager = new FeedManager();
+            feedManager.queueJob(feedParams);
+
+//            ParseUser.logInInBackground(email, password, new LogInCallback() {
+//                public void done(ParseUser user, ParseException e) {
+//
+//                    if (user != null) {
+//                        // Hooray! The user is logged in
+//                        LandingActivity.start(LoginActivity.this);
+//                        finish();
+//                    } else {
+//                        // Login failed. Look at the ParseException to see what happened.
+//                        mPasswordView.setError("User name or password is invalid");
+//                        mPasswordView.requestFocus();
+//                    }
+//                    showProgress(false);
+//                }
+//
+//            });
         }
     }
 
@@ -237,6 +282,17 @@ public class LoginActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        loginAs = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        //Do Nothing
     }
 
 //    @Override

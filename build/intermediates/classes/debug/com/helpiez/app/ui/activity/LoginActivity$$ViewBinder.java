@@ -18,9 +18,9 @@ public class LoginActivity$$ViewBinder<T extends com.helpiez.app.ui.activity.Log
     target.mLoginFormView = view;
     view = finder.findRequiredView(source, 2131492983, "field 'toolBar'");
     target.toolBar = finder.castView(view, 2131492983, "field 'toolBar'");
-    view = finder.findRequiredView(source, 2131492994, "field 'facebookLoginButton'");
-    target.facebookLoginButton = finder.castView(view, 2131492994, "field 'facebookLoginButton'");
-    view = finder.findRequiredView(source, 2131492993, "method 'email_sign_in_button'");
+    view = finder.findRequiredView(source, 2131492993, "field 'spinner'");
+    target.spinner = finder.castView(view, 2131492993, "field 'spinner'");
+    view = finder.findRequiredView(source, 2131492994, "method 'email_sign_in_button'");
     view.setOnClickListener(
       new butterknife.internal.DebouncingOnClickListener() {
         @Override public void doClick(
@@ -37,6 +37,6 @@ public class LoginActivity$$ViewBinder<T extends com.helpiez.app.ui.activity.Log
     target.mProgressView = null;
     target.mLoginFormView = null;
     target.toolBar = null;
-    target.facebookLoginButton = null;
+    target.spinner = null;
   }
 }

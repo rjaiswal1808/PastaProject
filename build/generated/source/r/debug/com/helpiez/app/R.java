@@ -2569,7 +2569,7 @@ containing a value of this type.
         public static final int edit_query=0x7f0c0068;
         public static final int email=0x7f0c007e;
         public static final int email_login_form=0x7f0c007d;
-        public static final int email_sign_in_button=0x7f0c0081;
+        public static final int email_sign_in_button=0x7f0c0082;
         public static final int end=0x7f0c0020;
         public static final int end_padder=0x7f0c00b1;
         public static final int enterAlways=0x7f0c0015;
@@ -2606,7 +2606,6 @@ containing a value of this type.
         public static final int listMode=0x7f0c000b;
         public static final int list_item=0x7f0c004d;
         public static final int login=0x7f0c0080;
-        public static final int login_button=0x7f0c0082;
         public static final int login_form=0x7f0c007c;
         public static final int login_progress=0x7f0c0078;
         public static final int main_layout=0x7f0c0095;
@@ -2667,6 +2666,7 @@ containing a value of this type.
         public static final int snackbar_text=0x7f0c0098;
         public static final int snap=0x7f0c0019;
         public static final int spacer=0x7f0c0051;
+        public static final int spinner=0x7f0c0081;
         public static final int split_action_bar=0x7f0c0008;
         public static final int src_atop=0x7f0c0028;
         public static final int src_in=0x7f0c0029;
@@ -2866,14 +2866,15 @@ containing a value of this type.
         public static final int prompt_ngo_name=0x7f060048;
         public static final int prompt_password=0x7f060049;
         public static final int prompt_phonenumber=0x7f06004a;
+        public static final int spinner_title=0x7f06004b;
         public static final int status_bar_notification_info_overflow=0x7f060024;
-        public static final int title_activity_create_event=0x7f06004b;
-        public static final int title_activity_event_creation=0x7f06004c;
-        public static final int title_activity_event_detail_sctivity=0x7f06004d;
-        public static final int title_activity_event_details=0x7f06004e;
-        public static final int title_activity_landing=0x7f06004f;
-        public static final int title_activity_login=0x7f060050;
-        public static final int title_activity_register=0x7f060051;
+        public static final int title_activity_create_event=0x7f06004c;
+        public static final int title_activity_event_creation=0x7f06004d;
+        public static final int title_activity_event_detail_sctivity=0x7f06004e;
+        public static final int title_activity_event_details=0x7f06004f;
+        public static final int title_activity_landing=0x7f060050;
+        public static final int title_activity_login=0x7f060051;
+        public static final int title_activity_register=0x7f060052;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f09007f;

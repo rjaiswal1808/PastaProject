@@ -10,14 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.helpiez.app.R;
-import com.helpiez.app.model.NGOEvent;
+import com.helpiez.app.model.Event;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class EventDetailActivity extends AppCompatActivity {
 
-    NGOEvent event;
+    Event event;
     @Bind(R.id.event_title)
     TextView eventTitle;
     @Bind(R.id.event_cause)
@@ -30,12 +30,12 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_detail_sctivity);
         ButterKnife.bind(EventDetailActivity.this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        event = (NGOEvent) getIntent().getExtras().getSerializable("EVENT_DETAIL");
+        event = (Event) getIntent().getExtras().getSerializable("EVENT_DETAIL");
         setSupportActionBar(toolbar);
-        Log.e("Rahul", event.getEventName()+" : " + event.getEventCause());
-        eventTitle.setText(event.getEventName());
-        eventTitle.setText(event.getEventCause());
-        eventTitle.setText(event.getEventDescription());
+        Log.e("Rahul", event.getEventDetail().getName()+" : " + event.getEventDetail().getCause());
+        eventTitle.setText(event.getEventDetail().getName());
+        eventTitle.setText(event.getEventDetail().getCause());
+        eventTitle.setText(event.getEventDetail().getAbout());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

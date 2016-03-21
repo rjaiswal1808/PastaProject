@@ -20,7 +20,7 @@ public class RegisterActivity$$ViewBinder<T extends com.helpiez.app.ui.activity.
     target.mProgressView = view;
     view = finder.findRequiredView(source, 2131492988, "field 'mLoginFormView'");
     target.mLoginFormView = view;
-    view = finder.findRequiredView(source, 2131492993, "method 'email_sign_in_button'");
+    view = finder.findRequiredView(source, 2131492994, "method 'email_sign_in_button'");
     view.setOnClickListener(
       new butterknife.internal.DebouncingOnClickListener() {
         @Override public void doClick(

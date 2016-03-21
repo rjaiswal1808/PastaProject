@@ -18,10 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.helpiez.app.R;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -141,36 +137,36 @@ public class RegisterActivity extends AppCompatActivity {
             // perform the user login attempt.
             showProgress(true);
 
-            ParseObject parseObject = new ParseObject("nss");
-            parseObject.put("name", ngo_name);
-            parseObject.put("username", email);
-            parseObject.put("phoneNum", phoneNumber);
-            parseObject.put("email", email);
-            parseObject.put("password", password);
-            parseObject.saveInBackground();
-
-            ParseUser user = new ParseUser();
-            user.setUsername(ngo_name);
-            user.setPassword(password);
-            user.setEmail(email);
-
-            // other fields can be set just like with ParseObject
-            user.put("phone_number", phoneNumber);
-
-            user.signUpInBackground(new SignUpCallback() {
-                public void done(ParseException e) {
-                    if (e == null) {
-                        // Hooray! Let them use the com.helpiez.app now.
-                        LandingActivity.start(RegisterActivity.this);
-                    } else {
-                        // Sign up didn't succeed. Look at the ParseException
-                        // to figure out what went wrong
-                        showProgress(false);
-                        mPasswordView.setError("Registration failed please try again!");
-                        mNGOName.requestFocus();
-                    }
-                }
-            });
+//            ParseObject parseObject = new ParseObject("nss");
+//            parseObject.put("name", ngo_name);
+//            parseObject.put("username", email);
+//            parseObject.put("phoneNum", phoneNumber);
+//            parseObject.put("email", email);
+//            parseObject.put("password", password);
+//            parseObject.saveInBackground();
+//
+//            ParseUser user = new ParseUser();
+//            user.setUsername(ngo_name);
+//            user.setPassword(password);
+//            user.setEmail(email);
+//
+//            // other fields can be set just like with ParseObject
+//            user.put("phone_number", phoneNumber);
+//
+//            user.signUpInBackground(new SignUpCallback() {
+//                public void done(ParseException e) {
+//                    if (e == null) {
+//                        // Hooray! Let them use the com.helpiez.app now.
+//                        LandingActivity.start(RegisterActivity.this);
+//                    } else {
+//                        // Sign up didn't succeed. Look at the ParseException
+//                        // to figure out what went wrong
+//                        showProgress(false);
+//                        mPasswordView.setError("Registration failed please try again!");
+//                        mNGOName.requestFocus();
+//                    }
+//                }
+//            });
         }
     }
 

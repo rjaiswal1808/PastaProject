@@ -6,9 +6,6 @@
 -keep class com.helpiez.app.ui.activity.RegisterActivity { <init>(); }
 -keep class com.helpiez.app.ui.activity.LandingActivity { <init>(); }
 -keep class com.facebook.FacebookActivity { <init>(); }
--keep class com.parse.PushService { <init>(); }
--keep class com.parse.ParsePushBroadcastReceiver { <init>(); }
--keep class com.parse.GcmBroadcastReceiver { <init>(); }
 -keep class com.helpiez.app.EventDetails { <init>(); }
 -keep class com.helpiez.app.ui.activity.EventCreationActivity { <init>(); }
 -keep class com.helpiez.app.ui.activity.EventDetailActivity { <init>(); }

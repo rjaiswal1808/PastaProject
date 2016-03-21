@@ -9,16 +9,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.helpiez.app.R;
-import com.helpiez.app.model.NGOEvent;
-import com.parse.ParseException;
-import com.parse.SaveCallback;
 
 import java.util.Calendar;
 
@@ -134,19 +130,13 @@ public class EventCreationActivity extends AppCompatActivity {
             // perform the user login attempt.
             showProgress(true);
 
-            NGOEvent event = new NGOEvent();
-            event.setEventName(eventName.getText().toString());
-            event.setEventTime(eventStart.getText().toString());
-            event.setEventDeadline(eventEnd.getText().toString());
-            event.setEventDescription(eventDescription.getText().toString());
-            event.setEventCause(eventCause.getText().toString());
-            event.setEventLocationAddress(eventLocation.getText().toString());
-            event.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    finish();
-                }
-            });
+//            NGOEvent event = new NGOEvent();
+//            event.setEventName(eventName.getText().toString());
+//            event.setEventTime(eventStart.getText().toString());
+//            event.setEventDeadline(eventEnd.getText().toString());
+//            event.setEventDescription(eventDescription.getText().toString());
+//            event.setEventCause(eventCause.getText().toString());
+//            event.setEventLocationAddress(eventLocation.getText().toString());
 
         }
     }

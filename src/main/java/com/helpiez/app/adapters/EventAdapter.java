@@ -11,7 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.helpiez.app.R;
-import com.helpiez.app.model.NGOEvent;
+import com.helpiez.app.model.Event;
+import com.helpiez.app.model.EventDetail;
 import com.helpiez.app.ui.activity.EventDetailActivity;
 
 import java.text.ParseException;
@@ -30,23 +31,23 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     final private static int EVENT_STATUS_RUNNING = 2;
 
     Context mContext;
-    private ArrayList<NGOEvent> mEvents;
+    private ArrayList<EventDetail> mEvents;
 
     public EventAdapter(Context context) {
         mContext = context;
         mEvents = new ArrayList<>();
     }
-    public void set(ArrayList<NGOEvent> events, int eventStatus) {
-        for(NGOEvent event : events)
+    public void set(ArrayList<EventDetail> events, int eventStatus) {
+        for(EventDetail event : events)
         {
-//            String deadline = event.getEventDeadline();
-//            Log.e("Rahul", deadline);
-//            if(getEventStatus(event) == eventStatus)
-//            {
-//                mEvents.add(event);
-//            }
+            String deadline = event.getDeadline();
+            Log.e("Rahul", deadline);
+            if(getEventStatus(event) == eventStatus)
+            {
+                mEvents.add(event);
+            }
         }
-        mEvents.addAll(events);
+//        mEvents.addAll(events);
 
         this.notifyDataSetChanged();
         events.clear();
@@ -63,12 +64,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CardView card = holder.mCard;
-        final NGOEvent event = mEvents.get(position);
-        Log.e("Rahul", event.getEventName());
+        final EventDetail event = mEvents.get(position);
+        Log.e("Rahul", event.getName());
         TextView txtContent = (TextView)card.findViewById(R.id.name);
         TextView txtDesc = (TextView)card.findViewById(R.id.desc);
-        txtContent.setText(event.getEventName());
-        txtDesc.setText(event.getEventCause());
+        txtContent.setText(event.getName());
+        txtDesc.setText(event.getCause());
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,10 +138,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         return false;
     }
 
-    public int getEventStatus(NGOEvent event){
-        if(isOver(event.getEventDeadline()))
+    public int getEventStatus(EventDetail event){
+        if(isOver(event.getDeadline()))
             return EVENT_STATUS_OVER;
-        if(isUpComing(event.getEventTime()))
+        if(isUpComing(event.getWhen()))
             return EVENT_STATUS_UPCOMING;
         return EVENT_STATUS_RUNNING;
     }

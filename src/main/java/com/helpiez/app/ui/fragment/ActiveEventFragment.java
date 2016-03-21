@@ -9,18 +9,27 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.helpiez.app.R;
+import com.helpiez.app.SessionManager;
 import com.helpiez.app.adapters.EventAdapter;
-import com.helpiez.app.model.NGOEvent;
+import com.helpiez.app.model.BusinessObject;
+import com.helpiez.app.model.Event;
+import com.helpiez.app.model.EventDetail;
+import com.helpiez.app.model.EventsList;
 import com.helpiez.app.ui.activity.LandingActivity;
-import com.helpiez.app.ui.util.ParseServer;
+import com.helpiez.app.volley.FeedManager;
+import com.helpiez.app.volley.FeedParams;
+import com.helpiez.app.volley.Interfaces;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +77,7 @@ public class ActiveEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e("Rahul", "active_event Create");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_active_event, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -80,7 +90,36 @@ public class ActiveEventFragment extends Fragment {
     }
 
     private void refreshProjectList() {
-        ParseServer.getProjects(mActivity, mHandler.obtainMessage());
+        //ParseServer.getProjects(mActivity, mHandler.obtainMessage());
+        //Call Service for data
+        Log.e("Rahul", "active_event refreshProjectList");
+        HashMap<String, String> hmpRegType = new HashMap<>();
+        hmpRegType.put("session_id", SessionManager.getSessionId(mActivity));
+        hmpRegType.put("user1_id", SessionManager.getUserId(mActivity));
+        String url = "http://rahuljaiswal.me/api/eventdetail.php";
+
+        FeedParams feedParams = new FeedParams(url, Event.class, new Interfaces.IDataRetrievalListener() {
+            @Override
+            public void onDataRetrieved(BusinessObject businessObject) {
+                Log.e("Rahul", "active_event Data Retrieved businessObject = ");
+                if(businessObject != null && businessObject instanceof Event){
+                    Event events = (Event) businessObject;
+                    if(events.getStatus() == 1){
+//                        ArrayList<EventDetail> posts = events.getEventDetail();
+                        Log.e("Rahul", "Size = ");
+//                        mAdapter.set(posts, 2);
+                    }
+                    else {
+                        Log.e("Rahul", "No Response");
+                    }
+                }
+            }
+        });
+        feedParams.setShouldCache(true);
+        feedParams.setMethod(Request.Method.POST);
+        feedParams.setPostParams(hmpRegType);
+        FeedManager feedManager = new FeedManager();
+        feedManager.queueJob(feedParams);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -98,15 +137,15 @@ public class ActiveEventFragment extends Fragment {
         }
     }
 
-    public Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            ArrayList<NGOEvent> posts = (ArrayList<NGOEvent>)msg.obj;
-            mAdapter.set(posts, 2);
-            Toast.makeText(mActivity, "Done", Toast.LENGTH_LONG).show();
-        }
-    };
+//    public Handler mHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            ArrayList<Event> posts = (ArrayList<Event>)msg.obj;
+//            mAdapter.set(posts, 2);
+//            Toast.makeText(mActivity, "Done", Toast.LENGTH_LONG).show();
+//        }
+//    };
 
     @Override
     public void onDetach() {
