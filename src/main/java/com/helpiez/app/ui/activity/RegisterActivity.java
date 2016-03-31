@@ -30,8 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     // UI references.
 
-    @Bind(R.id.ngo_name)
-    EditText mNGOName;
+    @Bind(R.id.name)
+    EditText mName;
 
     @Bind(R.id.email)
     EditText mEmailView;
@@ -41,6 +41,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Bind(R.id.password)
     EditText mPasswordView;
+
+    @Bind(R.id.ngo_id)
+    EditText mNssId;
 
     @Bind(R.id.login_progress)
     View mProgressView;
@@ -82,24 +85,26 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void attemptLogin() {
         // Reset errors.
-        mNGOName.setError(null);
+        mName.setError(null);
         mEmailView.setError(null);
         mPhoneNumber.setError(null);
         mPasswordView.setError(null);
+        mNssId.setError(null);
 
         // Store values at the time of the login attempt.
-        String ngo_name = mNGOName.getText().toString();
+        String ngo_name = mName.getText().toString();
         String email = mEmailView.getText().toString();
         String phoneNumber = mPhoneNumber.getText().toString();
         String password = mPasswordView.getText().toString();
+//        String mNssId = mNssId.getText().toString();
 
 
         boolean cancel = false;
         View focusView = null;
 
         if (!TextUtils.isEmpty(ngo_name) && !isNGONameValid(ngo_name)) {
-            mNGOName.setError(getString(R.string.error_invalid_ngoname));
-            focusView = mNGOName;
+            mName.setError(getString(R.string.error_invalid_ngoname));
+            focusView = mName;
             cancel = true;
         }
 
@@ -113,6 +118,17 @@ public class RegisterActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(phoneNumber) && !isPhoneNumberValid(phoneNumber)) {
             mPhoneNumber.setError(getString(R.string.error_invalid_phonenumber));
             focusView = mPhoneNumber;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
             cancel = true;
         }
 

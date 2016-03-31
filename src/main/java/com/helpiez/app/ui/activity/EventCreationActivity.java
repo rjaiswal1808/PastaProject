@@ -9,14 +9,27 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.helpiez.app.R;
+import com.helpiez.app.SessionManager;
+import com.helpiez.app.model.BusinessObject;
+import com.helpiez.app.model.CreatedEvent;
+import com.helpiez.app.model.EventDetail;
+import com.helpiez.app.model.EventsList;
+import com.helpiez.app.volley.FeedManager;
+import com.helpiez.app.volley.FeedParams;
+import com.helpiez.app.volley.Interfaces;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -137,6 +150,42 @@ public class EventCreationActivity extends AppCompatActivity {
 //            event.setEventDescription(eventDescription.getText().toString());
 //            event.setEventCause(eventCause.getText().toString());
 //            event.setEventLocationAddress(eventLocation.getText().toString());
+
+            HashMap<String, String> hmpRegType = new HashMap<>();
+            hmpRegType.put("name", eventName.getText().toString());
+            hmpRegType.put("about", eventDescription.getText().toString());
+            hmpRegType.put("when", eventStart.getText().toString());
+            hmpRegType.put("where", eventLocation.getText().toString());
+            hmpRegType.put("cause", eventCause.getText().toString());
+            hmpRegType.put("reimbursement", "NA");
+            hmpRegType.put("qual", "NA");
+            hmpRegType.put("req", "NA");
+            hmpRegType.put("deadline", eventEnd.getText().toString());
+            hmpRegType.put("ngo", "Helpiez NGO");
+            hmpRegType.put("nss_id", SessionManager.getNssId(this));
+            String url = "http://rahuljaiswal.me/api/createvent.php";
+
+            FeedParams feedParams = new FeedParams(url, CreatedEvent.class, new Interfaces.IDataRetrievalListener() {
+                @Override
+                public void onDataRetrieved(BusinessObject businessObject) {
+                    Log.e("Rahul", "businessObject = "+Boolean.valueOf(businessObject instanceof CreatedEvent));
+                    if(businessObject != null && businessObject instanceof CreatedEvent){
+                        CreatedEvent event = (CreatedEvent) businessObject;
+                        if(event.getStatus() == 1){
+                            Toast.makeText(EventCreationActivity.this, "New Event Created. Event Id : "+event.getId(), Toast.LENGTH_LONG);
+                        }
+                        else {
+                            Log.e("Rahul", "No Response");
+                        }
+                    }
+                    showProgress(false);
+                }
+            });
+            feedParams.setShouldCache(true);
+            feedParams.setMethod(Request.Method.POST);
+            feedParams.setPostParams(hmpRegType);
+            FeedManager feedManager = new FeedManager();
+            feedManager.queueJob(feedParams);
 
         }
     }

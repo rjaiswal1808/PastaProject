@@ -11,6 +11,7 @@ public class SessionManager {
     private static final String SESSION_ID = KEY_VALUE + "session_id";
     private static final String USER_TYPE = KEY_VALUE + "user_type";
     private static final String USER_ID = KEY_VALUE + "user_id";
+    private static final String NSS_ID = KEY_VALUE + "nss_id";
 
     public static void setSessionId(Context context, String device_id) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
@@ -43,6 +44,17 @@ public class SessionManager {
     public static String getUserId(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
         return preferences.getString(USER_ID, null);
+    }
+
+    public static void setNssId(Context context, String user_type) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(NSS_ID, user_type);
+        editor.apply();
+    }
+
+    public static String getNssId(Context context) {
+        SharedPreferences preferences = getSharedPreferences(context);
+        return preferences.getString(NSS_ID, null);
     }
 
     //Shared Prefrences Instance

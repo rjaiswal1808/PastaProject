@@ -10,18 +10,18 @@ public class User extends BusinessObject {
     @SerializedName("ok")
     private int status;
 
-    @SerializedName("username")
-    private String userName;
-
     @SerializedName("session_id")
     private String sessionId;
+
+    @SerializedName("user")
+    private UserDetail userDetail;
 
     public int getStatus() {
         return status;
     }
 
-    public String getUserName() {
-        return userName;
+    public UserDetail getUserDetail() {
+        return userDetail;
     }
 
     public String getSessionId() {

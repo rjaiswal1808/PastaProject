@@ -29,6 +29,7 @@ import com.helpiez.app.volley.FeedParams;
 import com.helpiez.app.volley.Interfaces;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.HashMap;
 
 /**
@@ -41,9 +42,6 @@ import java.util.HashMap;
  */
 public class ActiveEventFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     EventAdapter mAdapter;
     RecyclerView recyclerView;
@@ -67,6 +65,8 @@ public class ActiveEventFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,18 +96,18 @@ public class ActiveEventFragment extends Fragment {
         HashMap<String, String> hmpRegType = new HashMap<>();
         hmpRegType.put("session_id", SessionManager.getSessionId(mActivity));
         hmpRegType.put("user1_id", SessionManager.getUserId(mActivity));
-        String url = "http://rahuljaiswal.me/api/eventdetail.php";
+        hmpRegType.put("nss_id", SessionManager.getNssId(mActivity));
+        String url = "http://rahuljaiswal.me/api/getevent.php";
 
-        FeedParams feedParams = new FeedParams(url, Event.class, new Interfaces.IDataRetrievalListener() {
+        FeedParams feedParams = new FeedParams(url, EventsList.class, new Interfaces.IDataRetrievalListener() {
             @Override
             public void onDataRetrieved(BusinessObject businessObject) {
-                Log.e("Rahul", "active_event Data Retrieved businessObject = ");
-                if(businessObject != null && businessObject instanceof Event){
-                    Event events = (Event) businessObject;
+                if(businessObject != null && businessObject instanceof EventsList){
+                    EventsList events = (EventsList) businessObject;
                     if(events.getStatus() == 1){
-//                        ArrayList<EventDetail> posts = events.getEventDetail();
-                        Log.e("Rahul", "Size = ");
-//                        mAdapter.set(posts, 2);
+                        ArrayList<EventDetail> posts = events.getEventDetail();
+                        Log.e("Rahul", "Size = "+posts.size());
+                        mAdapter.set(posts, 2);
                     }
                     else {
                         Log.e("Rahul", "No Response");
@@ -137,15 +137,6 @@ public class ActiveEventFragment extends Fragment {
         }
     }
 
-//    public Handler mHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            ArrayList<Event> posts = (ArrayList<Event>)msg.obj;
-//            mAdapter.set(posts, 2);
-//            Toast.makeText(mActivity, "Done", Toast.LENGTH_LONG).show();
-//        }
-//    };
 
     @Override
     public void onDetach() {
@@ -153,16 +144,6 @@ public class ActiveEventFragment extends Fragment {
         mActivity = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

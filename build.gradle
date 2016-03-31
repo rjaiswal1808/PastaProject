@@ -1,15 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.parse'
+//apply plugin: 'com.google.gms.google-services'
 
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'https://maven.parse.com/repo' }
-    }
-    dependencies {
-        classpath 'com.parse.tools:gradle:1.+'
-    }
-}
 
 android {
     compileSdkVersion 23
@@ -57,4 +48,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
     compile 'com.google.code.gson:gson:2.2.+'
+    compile "com.google.android.gms:play-services-gcm:8.4.0"
 }

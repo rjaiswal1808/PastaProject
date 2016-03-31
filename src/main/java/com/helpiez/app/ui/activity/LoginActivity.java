@@ -183,6 +183,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                             SessionManager.setSessionId(LoginActivity.this, user.getSessionId());
                             SessionManager.setUserType(LoginActivity.this, loginAs);
                             SessionManager.setUserId(LoginActivity.this, email);
+                            SessionManager.setNssId(LoginActivity.this, user.getUserDetail().getNssId());
                             LandingActivity.start(LoginActivity.this);
                             finish();
                         }

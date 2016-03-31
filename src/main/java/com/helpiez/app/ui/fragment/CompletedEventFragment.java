@@ -5,12 +5,27 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
 import com.helpiez.app.R;
+import com.helpiez.app.SessionManager;
+import com.helpiez.app.adapters.EventAdapter;
+import com.helpiez.app.model.BusinessObject;
+import com.helpiez.app.model.EventDetail;
+import com.helpiez.app.model.EventsList;
 import com.helpiez.app.ui.activity.LandingActivity;
+import com.helpiez.app.volley.FeedManager;
+import com.helpiez.app.volley.FeedParams;
+import com.helpiez.app.volley.Interfaces;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,14 +36,9 @@ import com.helpiez.app.ui.activity.LandingActivity;
  * create an instance of this fragment.
  */
 public class CompletedEventFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    EventAdapter mAdapter;
+    RecyclerView recyclerView;
     private LandingActivity mActivity;
     public CompletedEventFragment() {
         // Required empty public constructor
@@ -46,8 +56,6 @@ public class CompletedEventFragment extends Fragment {
     public static CompletedEventFragment newInstance(String param1, String param2) {
         CompletedEventFragment fragment = new CompletedEventFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,17 +63,54 @@ public class CompletedEventFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mAdapter = new EventAdapter(mActivity);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e("Rahul", "complete_event Create");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_completed_event, container, false);
+        View view = inflater.inflate(R.layout.fragment_active_event, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        // use a  layout manager
+        RecyclerView.LayoutManager lm = new LinearLayoutManager(mActivity);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.setAdapter(mAdapter);
+        refreshProjectList();
+        return view;
+    }
+
+    private void refreshProjectList() {
+        //ParseServer.getProjects(mActivity, mHandler.obtainMessage());
+        //Call Service for data
+        Log.e("Rahul", "active_event refreshProjectList");
+        HashMap<String, String> hmpRegType = new HashMap<>();
+        hmpRegType.put("session_id", SessionManager.getSessionId(mActivity));
+        hmpRegType.put("user1_id", SessionManager.getUserId(mActivity));
+        String url = "http://rahuljaiswal.me/api/getevent.php";
+
+        FeedParams feedParams = new FeedParams(url, EventsList.class, new Interfaces.IDataRetrievalListener() {
+            @Override
+            public void onDataRetrieved(BusinessObject businessObject) {
+                if(businessObject != null && businessObject instanceof EventsList){
+                    EventsList events = (EventsList) businessObject;
+                    if(events.getStatus() == 1){
+                        ArrayList<EventDetail> posts = events.getEventDetail();
+                        Log.e("Rahul", "Size = "+posts.size());
+                        mAdapter.set(posts, 0);
+                    }
+                    else {
+                        Log.e("Rahul", "No Response");
+                    }
+                }
+            }
+        });
+        feedParams.setShouldCache(true);
+        feedParams.setMethod(Request.Method.POST);
+        feedParams.setPostParams(hmpRegType);
+        FeedManager feedManager = new FeedManager();
+        feedManager.queueJob(feedParams);
     }
 
     @Override

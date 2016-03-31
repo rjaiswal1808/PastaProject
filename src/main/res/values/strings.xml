@@ -32,7 +32,8 @@
     <string name="title_activity_register">Register</string>
     <string name="action_register_short">ActionPhoneNumber</string>
     <string name="prompt_phonenumber">Phone Number</string>
-    <string name="prompt_ngo_name">NGO Name</string>
+    <string name="prompt_name">Name</string>
+    <string name="ngo_id">NSS ID</string>
     <string name="title_activity_landing">Helpiez</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -65,5 +66,8 @@
     <string name="title_activity_event_creation">EventCreationActivity</string>
     <string name="title_activity_event_detail_sctivity">EventDetailSctivity</string>
     <string name="spinner_title">I am :</string>
+
+    <!-- GCM -->
+    <string name="sender_id">864557569553</string>
 
 </resources>

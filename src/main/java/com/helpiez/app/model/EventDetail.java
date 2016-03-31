@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class EventDetail extends BusinessObject{
 
-    @SerializedName("id")
+    @SerializedName("nss_id")
     private String id;
 
     @SerializedName("name")
